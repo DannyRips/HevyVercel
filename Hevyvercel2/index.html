@@ -204,18 +204,11 @@
             var currentWidth = window.innerWidth;
             var currentHeight = element.scrollHeight; // Updated to capture full height of the document
 
-            // Set the scale factor for higher quality
-            var scaleFactor = 4;
-
-          
-
-            // Capture the screenshot with higher scale for better quality
+            // Capture the screenshot without scaling
             domtoimage.toPng(element, { 
-                width: currentWidth * scaleFactor, 
-                height: currentHeight * scaleFactor,
+                width: currentWidth, 
+                height: currentHeight,
                 style: {
-                    transform: 'scale(' + scaleFactor + ')',
-                    transformOrigin: 'top left',
                     width: currentWidth + 'px',
                     height: currentHeight + 'px' // Ensure the height is correctly applied
                 }
