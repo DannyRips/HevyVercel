@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="he">
 <head>
@@ -209,8 +208,8 @@
             var scaleFactor = 4;
 
             // Ensure the element's width and height before capturing
-            element.style.width = currentWidth + 'px';
-            element.style.height = currentHeight + 'px';
+            element.style.width = (currentWidth * scaleFactor) + 'px';
+            element.style.height = (currentHeight * scaleFactor) + 'px';
 
             // Capture the screenshot with higher scale for better quality
             domtoimage.toPng(element, { 
