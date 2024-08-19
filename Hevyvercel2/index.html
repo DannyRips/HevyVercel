@@ -162,7 +162,7 @@
     </style>
 </head>
 <body>
-    <div class="toolbar">
+    <div class="(toolbar">
         <h1>נתוני התקדמות</h1>
     </div>
     <div class="container" id="contentToShare">
@@ -192,31 +192,38 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script>
         document.getElementById('downloadScreenshot').addEventListener('click', function() {
-            var element = document.body; // Capture the entire body including toolbar and container
+            var element = document.getElementById('contentToShare');
+
             var originalBackground = element.style.background; // Save original background
 
             // Apply the background gradient explicitly to the element before screenshot
             element.style.background = 'linear-gradient(to bottom right, #fff8eb, #e2d8e6)';
 
-            // Get the current device's viewport dimensions
-            var currentWidth = window.innerWidth;
-            var currentHeight = element.scrollHeight; // Updated to capture full height of the document
+            // Get the current device's viewport dimensions and full content height
+            var currentWidth = element.offsetWidth;
+            var currentHeight = element.scrollHeight;
 
             // Set the scale factor for higher quality
             var scaleFactor = 4;
 
             // Create a clone of the element to be captured
             var clone = element.cloneNode(true);
+
+            // Set styles for the cloned element
             clone.style.transform = 'scale(' + scaleFactor + ')';
             clone.style.transformOrigin = 'top left';
             clone.style.width = currentWidth + 'px';
             clone.style.height = currentHeight + 'px';
+            clone.style.position = 'absolute';
+            clone.style.top = '0';
+            clone.style.left = '0';
+            clone.style.zIndex = '-1'; // Ensure it's not visible on top
 
             document.body.appendChild(clone); // Append clone to body for capturing
 
             // Capture the screenshot with higher scale for better quality
-            domtoimage.toPng(clone, { 
-                width: currentWidth * scaleFactor, 
+            domtoimage.toPng(clone, {
+                width: currentWidth * scaleFactor,
                 height: currentHeight * scaleFactor
             }).then(function (dataUrl) {
                 var link = document.createElement('a');
@@ -224,7 +231,7 @@
                 link.href = dataUrl;
                 link.click();
 
-                // Remove the temporary background and clone after the screenshot
+                // Clean up: remove the temporary background and cloned element after the screenshot
                 element.style.background = originalBackground; // Restore original background
                 document.body.removeChild(clone);
             }).catch(function (error) {
