@@ -92,7 +92,6 @@
         }
         .box.summary {
             top: -68px;
-            /* display: flex; */
             justify-content: center;
             background: linear-gradient(90deg, #ffd1dcd1, #b8d2e466);
             -webkit-text-stroke: 0.2px #000; /* Black outline */
@@ -194,7 +193,6 @@
     <script>
         document.getElementById('downloadScreenshot').addEventListener('click', function() {
             var element = document.body; // Capture the entire body including toolbar and container
-
             var originalBackground = element.style.background; // Save original background
 
             // Apply the background gradient explicitly to the element before screenshot
@@ -207,32 +205,31 @@
             // Set the scale factor for higher quality
             var scaleFactor = 4;
 
-            // Ensure the element's width and height before capturing
-            element.style.width = currentWidth + 'px';
-            element.style.height = currentHeight + 'px';
+            // Create a clone of the element to be captured
+            var clone = element.cloneNode(true);
+            clone.style.transform = 'scale(' + scaleFactor + ')';
+            clone.style.transformOrigin = 'top left';
+            clone.style.width = currentWidth + 'px';
+            clone.style.height = currentHeight + 'px';
+
+            document.body.appendChild(clone); // Append clone to body for capturing
 
             // Capture the screenshot with higher scale for better quality
-            domtoimage.toPng(element, { 
+            domtoimage.toPng(clone, { 
                 width: currentWidth * scaleFactor, 
-                height: currentHeight * scaleFactor,
-                style: {
-                    transform: 'scale(' + scaleFactor + ')',
-                    transformOrigin: 'top left',
-                    width: currentWidth + 'px',
-                    height: currentHeight + 'px' // Ensure the height is correctly applied
-                }
+                height: currentHeight * scaleFactor
             }).then(function (dataUrl) {
                 var link = document.createElement('a');
                 link.download = 'Lightful_share_image.png';
                 link.href = dataUrl;
                 link.click();
 
-                // Remove the temporary background and reset dimensions after the screenshot
+                // Remove the temporary background and clone after the screenshot
                 element.style.background = originalBackground; // Restore original background
-                element.style.width = '';
-                element.style.height = '';
+                document.body.removeChild(clone);
             }).catch(function (error) {
                 console.error('Error capturing screenshot:', error);
+                document.body.removeChild(clone);
             });
         });
     </script>
