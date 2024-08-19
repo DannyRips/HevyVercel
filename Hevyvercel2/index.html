@@ -21,9 +21,7 @@
         .container {
             max-width: 800px;
             width: 100%;
-            top: -66px;
-            max-height: 530px;
-            height: 524px;
+            top: 0;
             margin: 0 auto;
             text-align: center;
             position: relative;
@@ -33,15 +31,7 @@
         }
         .toolbar {
             width: 100%;
-            height: 70px;
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            margin-bottom: 20px;
         }
         h1 {
             font-size: 1.6em;
@@ -51,7 +41,6 @@
             -webkit-text-stroke: 0.9px #000; /* Black outline */
         }
         .arrow {
-            position: relative;
             margin-top: -58px;
         }
         .arrow img {
@@ -130,8 +119,6 @@
             margin: 0 auto;
         }
         .evaluations {
-            margin-top: 0px;
-            position: relative;
             top: -161px;
             left: -79px;
             font-size: 1em;
@@ -158,15 +145,14 @@
                 top: -85px;
                 left: 111px;
             }
-
         }
     </style>
 </head>
 <body>
-    <div class="toolbar">
-        <h1>נתוני התקדמות</h1>
-    </div>
     <div class="container" id="contentToShare">
+        <div class="toolbar">
+            <h1>נתוני התקדמות</h1>
+        </div>
         <div class="arrow">
             <img src="arrow.svg" alt="arrow">
         </div>
@@ -188,7 +174,7 @@
             </button>
         </div>
     </div>
-    <button id="downloadScreenshot" style="position: absolute; bottom. 175px; right: 20px; padding: 10px 20px; font-size: 16px; color: white; background-color: #3897f0; border: none; border-radius: 5px; cursor: pointer;">Download Screenshot</button>
+    <button id="downloadScreenshot" style="position: absolute; bottom: 20px; right: 20px; padding: 10px 20px; font-size: 16px; color: white; background-color: #3897f0; border: none; border-radius: 5px; cursor: pointer;">Download Screenshot</button>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script>
