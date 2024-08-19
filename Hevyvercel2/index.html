@@ -193,30 +193,33 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script>
         document.getElementById('downloadScreenshot').addEventListener('click', function() {
-            var element = document.getElementById('contentToShare'); // Target only the container element
-            
-            // Save the original width and height
-            var originalWidth = element.style.width;
-            var originalHeight = element.style.height;
+            var element = document.body; // Capture the entire body including toolbar and container
+
+            var originalBackground = element.style.background; // Save original background
+
+            // Apply the background gradient explicitly to the element before screenshot
+            element.style.background = 'linear-gradient(to bottom right, #fff8eb, #e2d8e6)';
+
+            // Get the current device's viewport dimensions
+            var currentWidth = window.innerWidth;
+            var currentHeight = element.scrollHeight; // Updated to capture full height of the document
 
             // Set the scale factor for higher quality
             var scaleFactor = 4;
 
-            // Set the new dimensions for high-quality screenshot
-            var width = element.offsetWidth;
-            var height = element.offsetHeight;
-            
+            // Ensure the element's width and height before capturing
+            element.style.width = currentWidth + 'px';
+            element.style.height = currentHeight + 'px';
+
             // Capture the screenshot with higher scale for better quality
             domtoimage.toPng(element, { 
-                width: width * scaleFactor, 
-                height: height * scaleFactor,
+                width: currentWidth * scaleFactor, 
+                height: currentHeight * scaleFactor,
                 style: {
-                    width: width + 'px',
-                    height: height + 'px'
-                },
-                filter: function (node) {
-                    // Exclude the download button from the screenshot
-                    return node.id !== 'downloadScreenshot';
+                    transform: 'scale(' + scaleFactor + ')',
+                    transformOrigin: 'top left',
+                    width: currentWidth + 'px',
+                    height: currentHeight + 'px' // Ensure the height is correctly applied
                 }
             }).then(function (dataUrl) {
                 var link = document.createElement('a');
@@ -224,9 +227,10 @@
                 link.href = dataUrl;
                 link.click();
 
-                // Restore original dimensions
-                element.style.width = originalWidth;
-                element.style.height = originalHeight;
+                // Remove the temporary background and reset dimensions after the screenshot
+                element.style.background = originalBackground; // Restore original background
+                element.style.width = '';
+                element.style.height = '';
             }).catch(function (error) {
                 console.error('Error capturing screenshot:', error);
             });
