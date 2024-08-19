@@ -207,19 +207,25 @@
             // Set the scale factor for higher quality
             var scaleFactor = 4;
 
-            // Ensure the element's width and height before capturing
-            element.style.width = currentWidth + 'px';
-            element.style.height = currentHeight + 'px';
+            // Create an off-screen clone of the element
+            var clone = element.cloneNode(true);
+            clone.style.transform = 'scale(' + scaleFactor + ')';
+            clone.style.transformOrigin = 'top left';
+            clone.style.width = currentWidth + 'px';
+            clone.style.height = currentHeight + 'px';
+            clone.style.position = 'absolute';
+            clone.style.top = '-9999px';
+            document.body.appendChild(clone);
 
-            // Capture the screenshot with higher scale for better quality
-            domtoimage.toPng(element, { 
-                width: currentWidth * scaleFactor, 
+            // Capture the screenshot from the off-screen clone
+            domtoimage.toPng(clone, {
+                width: currentWidth * scaleFactor,
                 height: currentHeight * scaleFactor,
                 style: {
                     transform: 'scale(' + scaleFactor + ')',
                     transformOrigin: 'top left',
                     width: currentWidth + 'px',
-                    height: currentHeight + 'px' // Ensure the height is correctly applied
+                    height: currentHeight + 'px'
                 }
             }).then(function (dataUrl) {
                 var link = document.createElement('a');
@@ -227,12 +233,12 @@
                 link.href = dataUrl;
                 link.click();
 
-                // Remove the temporary background and reset dimensions after the screenshot
+                // Clean up: Remove the off-screen clone and restore original styles
+                document.body.removeChild(clone);
                 element.style.background = originalBackground; // Restore original background
-                element.style.width = '';
-                element.style.height = '';
             }).catch(function (error) {
                 console.error('Error capturing screenshot:', error);
+                document.body.removeChild(clone); // Ensure the clone is removed even if there's an error
             });
         });
     </script>
