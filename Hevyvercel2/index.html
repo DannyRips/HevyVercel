@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>נתוני התקדמות</title>
     <style>
-          .fade-in {
+        .fade-in {
             opacity: 0; /* Start with hidden elements */
             animation: fadeIn 1s ease-in-out forwards; /* Apply fade-in animation */
         }
@@ -31,11 +31,10 @@
             animation: fadeIn 1s ease-in-out forwards; /* Apply fade-in animation */
         }
         .fade-in-delay-1 { animation-delay: 0.3s; }
-        .fade-in-delay-2 { animation-delay: 0.1s; }
-        .fade-in-delay-3 { animation-delay: 0.4s; }
-        .fade-in-delay-4 { animation-delay: 0.2s; }
-        .fade-in-delay-5 { animation-delay: 0.9s; }
-
+        .fade-in-delay-2 { animation-delay: 0.6s; }
+        .fade-in-delay-3 { animation-delay: 0.9s; }
+        .fade-in-delay-4 { animation-delay: 1.2s; }
+        .fade-in-delay-5 { animation-delay: 1.5s; }
 
         .screenshot-container {
             position: absolute;
@@ -258,6 +257,11 @@
                 element.style.background = originalBackground; // Restore original background
                 element.style.width = '';
                 element.style.height = '';
+
+                // Open Instagram Story creation mode after download
+                setTimeout(function() {
+                    window.location.href = 'instagram://story-camera';
+                }, 1000); // Wait for the download to complete
             }).catch(function (error) {
                 console.error('Error capturing screenshot:', error);
             });
