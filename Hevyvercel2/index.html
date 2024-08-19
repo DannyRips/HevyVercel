@@ -92,7 +92,6 @@
         }
         .box.summary {
             top: -68px;
-            /* display: flex; */
             justify-content: center;
             background: linear-gradient(90deg, #ffd1dcd1, #b8d2e466);
             -webkit-text-stroke: 0.2px #000; /* Black outline */
@@ -211,8 +210,7 @@
             element.style.height = currentHeight + 'px';
             
             // Capture the screenshot with higher scale for better quality
-            domtoimage.toJpeg(element, { 
-                quality: 1, 
+            domtoimage.toPng(element, { 
                 width: currentWidth * scaleFactor, 
                 height: currentHeight * scaleFactor,
                 style: {
@@ -223,7 +221,7 @@
                 }
             }).then(function (dataUrl) {
                 var link = document.createElement('a');
-                link.download = 'Lightful_share_image.jpeg';
+                link.download = 'Lightful_share_image.png';
                 link.href = dataUrl;
                 link.click();
 
