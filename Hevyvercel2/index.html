@@ -203,26 +203,37 @@
             var currentWidth = window.innerWidth;
             var currentHeight = window.innerHeight;
 
+            // Set the scale factor for higher quality
+            var scaleFactor = 2;
+
             // Ensure the element's width and height before capturing
             element.style.width = currentWidth + 'px';
             element.style.height = currentHeight + 'px';
-
+            
             // Capture the screenshot with higher scale for better quality
-            domtoimage.toJpeg(element, { quality: 1, width: currentWidth * 2, height: currentHeight * 2, style: { transform: 'scale(2)', transformOrigin: 'top left' } })
-                .then(function (dataUrl) {
-                    var link = document.createElement('a');
-                    link.download = 'Lightful_share_image.jpeg';
-                    link.href = dataUrl;
-                    link.click();
+            domtoimage.toJpeg(element, { 
+                quality: 1, 
+                width: currentWidth * scaleFactor, 
+                height: currentHeight * scaleFactor,
+                style: {
+                    transform: 'scale(' + scaleFactor + ')',
+                    transformOrigin: 'top left',
+                    width: currentWidth + 'px',
+                    height: currentHeight + 'px'
+                }
+            }).then(function (dataUrl) {
+                var link = document.createElement('a');
+                link.download = 'Lightful_share_image.jpeg';
+                link.href = dataUrl;
+                link.click();
 
-                    // Remove the temporary background and reset dimensions after the screenshot
-                    element.style.background = originalBackground; // Restore original background
-                    element.style.width = '';
-                    element.style.height = '';
-                })
-                .catch(function (error) {
-                    console.error('Error capturing screenshot:', error);
-                });
+                // Remove the temporary background and reset dimensions after the screenshot
+                element.style.background = originalBackground; // Restore original background
+                element.style.width = '';
+                element.style.height = '';
+            }).catch(function (error) {
+                console.error('Error capturing screenshot:', error);
+            });
         });
     </script>
 </body>
