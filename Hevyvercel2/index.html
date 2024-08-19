@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>נתוני התקדמות</title>
     <style>
+          .fade-in {
+            opacity: 0; /* Start with hidden elements */
+            animation: fadeIn 1s ease-in-out forwards; /* Apply fade-in animation */
+        }
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             background: linear-gradient(to bottom right, #fff8eb, #e2d8e6);
@@ -22,35 +26,16 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        @keyframes sparkle {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 1; transform: scale(1.5); }
-        }
-
         .fade-in {
             opacity: 0; /* Start with hidden elements */
             animation: fadeIn 1s ease-in-out forwards; /* Apply fade-in animation */
         }
-
         .fade-in-delay-1 { animation-delay: 0.3s; }
-        .fade-in-delay-2 { animation-delay: 0.6s; }
-        .fade-in-delay-3 { animation-delay: 0.9s; }
-        .fade-in-delay-4 { animation-delay: 1.2s; }
-        .fade-in-delay-5 { animation-delay: 1.5s; }
+        .fade-in-delay-2 { animation-delay: 0.1s; }
+        .fade-in-delay-3 { animation-delay: 0.4s; }
+        .fade-in-delay-4 { animation-delay: 0.2s; }
+        .fade-in-delay-5 { animation-delay: 0.9s; }
 
-        .sparkle {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            width: 10px;
-            height: 10px;
-            animation: sparkle 0.5s linear infinite;
-        }
-
-        .sparkle-1 { animation-delay: 2s; top: 10%; left: 10%; }
-        .sparkle-2 { animation-delay: 2.2s; top: 20%; left: 70%; }
-        .sparkle-3 { animation-delay: 2.4s; top: 50%; left: 40%; }
-        .sparkle-4 { animation-delay: 2.6s; top: 80%; left: 20%; }
 
         .screenshot-container {
             position: absolute;
@@ -162,8 +147,6 @@
             position: absolute;
             top: -50px;
             right: 50px;
-            animation: fadeIn 1s ease-in-out forwards;
-            animation-delay: 1.2s;
         }
         .lightful-logo img {
             width: 150px;
@@ -219,11 +202,6 @@
                 </div>
                 <div class="lightful-logo fade-in fade-in-delay-4">
                     <img src="logofull250px.svg" alt="LIGHTFUL">
-                    <!-- Add sparkles -->
-                    <div class="sparkle sparkle-1"></div>
-                    <div class="sparkle sparkle-2"></div>
-                    <div class="sparkle sparkle-3"></div>
-                    <div class="sparkle sparkle-4"></div>
                 </div>
             </div>
         </div>
