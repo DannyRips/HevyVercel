@@ -211,19 +211,15 @@
             element.style.width = currentWidth + 'px';
             element.style.height = currentHeight + 'px';
 
-            // Temporarily apply the transformation to the element
-            element.style.transform = 'scale(' + scaleFactor + ')';
-            element.style.transformOrigin = 'top left';
-
             // Capture the screenshot with higher scale for better quality
             domtoimage.toPng(element, { 
                 width: currentWidth * scaleFactor, 
                 height: currentHeight * scaleFactor,
                 style: {
-                    transform: 'scale(1)', // Reset the scale to 1 for the screenshot
+                    transform: 'scale(' + scaleFactor + ')',
                     transformOrigin: 'top left',
-                    width: currentWidth + 'px',
-                    height: currentHeight + 'px' // Ensure the height is correctly applied
+                    width: (currentWidth * scaleFactor) + 'px',
+                    height: (currentHeight * scaleFactor) + 'px' // Ensure the height is correctly applied
                 }
             }).then(function (dataUrl) {
                 var link = document.createElement('a');
@@ -235,7 +231,6 @@
                 element.style.background = originalBackground; // Restore original background
                 element.style.width = '';
                 element.style.height = '';
-                element.style.transform = ''; // Reset the transformation
             }).catch(function (error) {
                 console.error('Error capturing screenshot:', error);
             });
