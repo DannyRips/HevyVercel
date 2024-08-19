@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>נתוני התקדמות</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(to bottom right, #fff8eb, #e2d8e6);
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            top: -66px;
+            max-height: 530px;
+            height: 524px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .toolbar {
+            width: 100%;
+            height: 70px;
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 1.6em;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            color: #f6bca1; /* Matched to title color */
+            margin: 0;
+            -webkit-text-stroke: 0.9px #000; /* Black outline */
+        }
+
+        .arrow {
+            position: relative;
+            margin-top: -58px;
+        }
+
+        .arrow img {
+            width: 177px; /* Adjust the size as needed */
+            display: block;
+            margin: 0 auto;
+        }
+
+        .content {
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .box {
+            width: 44%;
+            height: 60px;
+            padding: 20px;
+            margin: 20px auto;
+            background: linear-gradient(to bottom right, #ff8cd1, #b8d2e4);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            color: #f6bca1;
+            font-size: medium;
+            position: relative;
+            z-index: 1;
+            -webkit-text-stroke: 0.2px #000; /* Black outline */
+        }
+
+        .box.general-info {
+            top: 30px;
+            left: 0; /* Stick to the left */
+            background: linear-gradient(90deg, #ffd1dcd1, #b8d2e466);
+            -webkit-text-stroke: 0.2px #000; /* Black outline */
+        }
+
+        .box.general-info p{
+            font-size: medium;
+            justify-content: center;
+            position: relative;
+            display: flex;
+            top: -29px;
+        }
+
+        .box.summary {
+            top: -68px;
+            /* display: flex; */
+            justify-content: center;
+            background: linear-gradient(90deg, #ffd1dcd1, #b8d2e466);
+            -webkit-text-stroke: 0.2px #000; /* Black outline */
+        }
+
+        .box.summary p {
+            display: flex;
+            justify-content: center;
+            top: -29px;
+            position: relative;
+            font-size: medium;
+        }
+
+        .box.progress-measurements {
+            top: -70px;
+            background: linear-gradient(90deg,#ffd1dcd1, #b8d2e466);
+            width: 34%;
+            height: 38px;
+            left: 77px;
+            -webkit-text-stroke: 0.2px #000; /* Black outline */
+        }
+
+        .box.progress-measurements p {
+            display: flex;
+            font-size: medium;
+            top: -29px;
+            position: relative;
+            justify-content: center;
+        }
+
+        .lightful-logo {
+            position: absolute;
+            top: -50px;
+            right: 50px;
+        }
+
+        .lightful-logo img {
+            width: 150px;
+            position: relative;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .evaluations {
+            margin-top: 0px;
+            position: relative;
+            top: -161px;
+            left: -79px;
+            font-size: 1em;
+            color: #f6bca1;
+            background: linear-gradient(90deg, #ffd1dcd1, #b8d2e466);
+            padding: 10px;
+            border-radius: 10px;
+            display: inline-block;
+            -webkit-text-stroke: 0.2px #000; /* Black outline */
+        }
+
+        button {
+            color: transparent;
+        }
+
+        @media (max-width: 768px) {
+            .box.general-info {
+                width: 50%;
+                height: 65px;
+                top: -64px;
+                right: 68px;
+            }
+
+            .lightful-logo img {
+                width: 84%;
+                height: 220px;
+                top: -85px;
+                left: 111px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="toolbar">
+        <h1>נתוני התקדמות</h1>
+    </div>
+
+    <div class="container" id="contentToShare">
+        <div class="arrow">
+            <img src="arrow.svg" alt="arrow">
+        </div>
+        <div class="content">
+            <div class="box general-info">
+                <p>מידע כללי</p>
+            </div>
+            <div class="box summary">
+                <p>סיכום</p>
+            </div>
+            <div class="box progress-measurements">
+                <p>מטרות עתידיות</p>
+            </div>
+            <div class="lightful-logo">
+                <img src="logofull250px.svg" alt="LIGHTFUL">
+            </div>
+            <button class="evaluations">
+                <p>Volume</p>
+            </button>
+        </div>
+    </div>
+    <button id="shareToInstagram" style="position: absolute; bottom: 20px; right: 20px; padding: 10px 20px; font-size: 16px; color: white; background-color: #3897f0; border: none; border-radius: 5px; cursor: pointer;">Share to Instagram Story</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script>
+        document.getElementById('shareToInstagram').addEventListener('click', function() {
+            html2canvas(document.getElementById('contentToShare'), {
+                onrendered: function(canvas) {
+                    var dataUrl = canvas.toDataURL('image/png');
+                    var link = document.createElement('a');
+                    link.href = dataUrl;
+                    link.download = 'share-image.png';
+                    link.click();
+
+                    // Attempt to open Instagram with the image URL
+                    var shareUrl = `instagram://story-camera?backgroundImage=${encodeURIComponent(dataUrl)}`;
+                    window.location.href = shareUrl;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
