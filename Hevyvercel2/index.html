@@ -18,17 +18,13 @@
             overflow: hidden;
             position: relative;
         }
-        .screenshot-container {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 800px;
-        }
         .toolbar {
             width: 100%;
-            height: 7px;
+            height: 70px;
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -44,6 +40,7 @@
         .container {
             max-width: 800px;
             width: 100%;
+            top: -66px;
             max-height: 530px;
             height: 524px;
             margin: 0 auto;
@@ -166,31 +163,29 @@
     </style>
 </head>
 <body>
-    <div class="screenshot-container" id="screenshotContainer">
-        <div class="toolbar">
-            <h1>נתוני התקדמות</h1>
+    <div class="toolbar">
+        <h1>נתוני התקדמות</h1>
+    </div>
+    <div class="container" id="contentToShare">
+        <div class="arrow">
+            <img src="arrow.svg" alt="arrow">
         </div>
-        <div class="container" id="contentToShare">
-            <div class="arrow">
-                <img src="arrow.svg" alt="arrow">
+        <div class="content">
+            <div class="box general-info">
+                <p>מידע כללי</p>
             </div>
-            <div class="content">
-                <div class="box general-info">
-                    <p>מידע כללי</p>
-                </div>
-                <div class="box summary">
-                    <p>סיכום</p>
-                </div>
-                <div class="box progress-measurements">
-                    <p>מטרות עתידיות</p>
-                </div>
-                <div class="lightful-logo">
-                    <img src="logofull250px.svg" alt="LIGHTFUL">
-                </div>
-                <button class="evaluations">
-                    <p>Volume</p>
-                </button>
+            <div class="box summary">
+                <p>סיכום</p>
             </div>
+            <div class="box progress-measurements">
+                <p>מטרות עתידיות</p>
+            </div>
+            <div class="lightful-logo">
+                <img src="logofull250px.svg" alt="LIGHTFUL">
+            </div>
+            <button class="evaluations">
+                <p>Volume</p>
+            </button>
         </div>
     </div>
     <button id="downloadScreenshot" style="position: absolute; bottom: 175px; right: 20px; padding: 10px 20px; font-size: 16px; color: white; background-color: #3897f0; border: none; border-radius: 5px; cursor: pointer;">Download Screenshot</button>
@@ -198,26 +193,42 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script>
         document.getElementById('downloadScreenshot').addEventListener('click', function() {
-            var element = document.getElementById('screenshotContainer'); // Capture the screenshot container
+            // Create a new container for the screenshot
+            var screenshotContainer = document.createElement('div');
+            screenshotContainer.style.position = 'absolute';
+            screenshotContainer.style.top = '10%'; // Adjust this value to bring it higher
+            screenshotContainer.style.left = '50%';
+            screenshotContainer.style.transform = 'translateX(-50%)';
+            screenshotContainer.style.display = 'flex';
+            screenshotContainer.style.flexDirection = 'column';
+            screenshotContainer.style.alignItems = 'center';
+            screenshotContainer.style.width = '100%';
+            screenshotContainer.style.maxWidth = '800px';
+            screenshotContainer.style.background = 'linear-gradient(to bottom right, #fff8eb, #e2d8e6)';
 
-            var originalBackground = element.style.background; // Save original background
+            // Clone the toolbar and content into the new container
+            var toolbarClone = document.querySelector('.toolbar').cloneNode(true);
+            var contentClone = document.getElementById('contentToShare').cloneNode(true);
 
-            // Apply the background gradient explicitly to the element before screenshot
-            element.style.background = 'linear-gradient(to bottom right, #fff8eb, #e2d8e6)';
+            screenshotContainer.appendChild(toolbarClone);
+            screenshotContainer.appendChild(contentClone);
+
+            // Append the new container to the body temporarily
+            document.body.appendChild(screenshotContainer);
 
             // Get the current device's viewport dimensions
-            var currentWidth = element.scrollWidth;
-            var currentHeight = element.scrollHeight; // Updated to capture full height of the container
+            var currentWidth = screenshotContainer.scrollWidth;
+            var currentHeight = screenshotContainer.scrollHeight; // Updated to capture full height of the container
 
             // Set the scale factor for higher quality
             var scaleFactor = 4;
 
             // Ensure the element's width and height before capturing
-            element.style.width = currentWidth + 'px';
-            element.style.height = currentHeight + 'px';
+            screenshotContainer.style.width = currentWidth + 'px';
+            screenshotContainer.style.height = currentHeight + 'px';
 
             // Capture the screenshot with higher scale for better quality
-            domtoimage.toPng(element, { 
+            domtoimage.toPng(screenshotContainer, { 
                 width: currentWidth * scaleFactor, 
                 height: currentHeight * scaleFactor,
                 style: {
@@ -232,10 +243,8 @@
                 link.href = dataUrl;
                 link.click();
 
-                // Remove the temporary background and reset dimensions after the screenshot
-                element.style.background = originalBackground; // Restore original background
-                element.style.width = '';
-                element.style.height = '';
+                // Remove the temporary container after the screenshot
+                document.body.removeChild(screenshotContainer);
             }).catch(function (error) {
                 console.error('Error capturing screenshot:', error);
             });
