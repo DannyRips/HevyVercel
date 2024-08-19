@@ -18,26 +18,17 @@
             overflow: hidden;
             position: relative;
         }
-        .container {
-            max-width: 800px;
-            width: 100%;
-            top: -66px;
-            max-height: 530px;
-            height: 524px;
-            margin: 0 auto;
-            text-align: center;
+        .screenshot-container {
             position: relative;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 800px;
         }
         .toolbar {
             width: 100%;
             height: 70px;
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -49,6 +40,18 @@
             color: #f6bca1; /* Matched to title color */
             margin: 0;
             -webkit-text-stroke: 0.9px #000; /* Black outline */
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            max-height: 530px;
+            height: 524px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow: hidden;
         }
         .arrow {
             position: relative;
