@@ -188,43 +188,53 @@
             </button>
         </div>
     </div>
-document.getElementById('downloadScreenshot').addEventListener('click', function() {
-    var element = document.body;
+    <button id="downloadScreenshot" style="position: absolute; bottom: 175px; right: 20px; padding: 10px 20px; font-size: 16px; color: white; background-color: #3897f0; border: none; border-radius: 5px; cursor: pointer;">Download Screenshot</button>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+    <script>
+        document.getElementById('downloadScreenshot').addEventListener('click', function() {
+            var element = document.body; // Capture the entire body including toolbar and container
 
-    var originalBackground = element.style.background;
+            var originalBackground = element.style.background; // Save original background
 
-    // Apply the background gradient explicitly to the element before screenshot
-    element.style.background = 'linear-gradient(to bottom right, #fff8eb, #e2d8e6)';
+            // Apply the background gradient explicitly to the element before screenshot
+            element.style.background = 'linear-gradient(to bottom right, #fff8eb, #e2d8e6)';
 
-    var currentWidth = window.innerWidth;
-    var currentHeight = element.scrollHeight;
-    var scaleFactor = 4;
+            // Get the current device's viewport dimensions
+            var currentWidth = window.innerWidth;
+            var currentHeight = element.scrollHeight; // Updated to capture full height of the document
 
-    // Clone the element to avoid modifying the original layout
-    var clonedElement = element.cloneNode(true);
-    clonedElement.style.width = currentWidth + 'px';
-    clonedElement.style.height = currentHeight + 'px';
-    clonedElement.style.transform = 'scale(' + scaleFactor + ')';
-    clonedElement.style.transformOrigin = 'top left';
-    clonedElement.style.position = 'absolute';
-    clonedElement.style.left = '-10000px'; // Position it off-screen
+            // Set the scale factor for higher quality
+            var scaleFactor = 4;
 
-    document.body.appendChild(clonedElement);
+            // Ensure the element's width and height before capturing
+            element.style.width = currentWidth + 'px';
+            element.style.height = currentHeight + 'px';
 
-    domtoimage.toPng(clonedElement, {
-        width: currentWidth * scaleFactor,
-        height: currentHeight * scaleFactor,
-    }).then(function (dataUrl) {
-        var link = document.createElement('a');
-        link.download = 'Lightful_share_image.png';
-        link.href = dataUrl;
-        link.click();
+            // Capture the screenshot with higher scale for better quality
+            domtoimage.toPng(element, { 
+                width: currentWidth * scaleFactor, 
+                height: currentHeight * scaleFactor,
+                style: {
+                    transform: 'scale(' + scaleFactor + ')',
+                    transformOrigin: 'top left',
+                    width: currentWidth + 'px',
+                    height: currentHeight + 'px' // Ensure the height is correctly applied
+                }
+            }).then(function (dataUrl) {
+                var link = document.createElement('a');
+                link.download = 'Lightful_share_image.png';
+                link.href = dataUrl;
+                link.click();
 
-        // Remove the clone after the screenshot
-        document.body.removeChild(clonedElement);
-
-        element.style.background = originalBackground;
-    }).catch(function (error) {
-        console.error('Error capturing screenshot:', error);
-    });
-});
+                // Remove the temporary background and reset dimensions after the screenshot
+                element.style.background = originalBackground; // Restore original background
+                element.style.width = '';
+                element.style.height = '';
+            }).catch(function (error) {
+                console.error('Error capturing screenshot:', error);
+            });
+        });
+    </script>
+</body>
+</html>
