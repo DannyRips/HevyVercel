@@ -21,7 +21,9 @@
         .container {
             max-width: 800px;
             width: 100%;
-            top: 0;
+            top: -66px;
+            max-height: 530px;
+            height: 524px;
             margin: 0 auto;
             text-align: center;
             position: relative;
@@ -31,7 +33,15 @@
         }
         .toolbar {
             width: 100%;
-            margin-bottom: 20px;
+            height: 70px;
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
         h1 {
             font-size: 1.6em;
@@ -41,6 +51,7 @@
             -webkit-text-stroke: 0.9px #000; /* Black outline */
         }
         .arrow {
+            position: relative;
             margin-top: -58px;
         }
         .arrow img {
@@ -72,7 +83,7 @@
             background: linear-gradient(90deg, #ffd1dcd1, #b8d2e466);
             -webkit-text-stroke: 0.2px #000; /* Black outline */
         }
-        .box.general-info p{
+        .box.general-info p {
             font-size: medium;
             justify-content: center;
             position: relative;
@@ -81,6 +92,7 @@
         }
         .box.summary {
             top: -68px;
+            /* display: flex; */
             justify-content: center;
             background: linear-gradient(90deg, #ffd1dcd1, #b8d2e466);
             -webkit-text-stroke: 0.2px #000; /* Black outline */
@@ -119,6 +131,8 @@
             margin: 0 auto;
         }
         .evaluations {
+            margin-top: 0px;
+            position: relative;
             top: -161px;
             left: -79px;
             font-size: 1em;
@@ -149,10 +163,10 @@
     </style>
 </head>
 <body>
+    <div class="toolbar">
+        <h1>נתוני התקדמות</h1>
+    </div>
     <div class="container" id="contentToShare">
-        <div class="toolbar">
-            <h1>נתוני התקדמות</h1>
-        </div>
         <div class="arrow">
             <img src="arrow.svg" alt="arrow">
         </div>
@@ -174,7 +188,7 @@
             </button>
         </div>
     </div>
-    <button id="downloadScreenshot" style="position: absolute; bottom: 20px; right: 20px; padding: 10px 20px; font-size: 16px; color: white; background-color: #3897f0; border: none; border-radius: 5px; cursor: pointer;">Download Screenshot</button>
+    <button id="downloadScreenshot" style="position: absolute; bottom: 175px; right: 20px; padding: 10px 20px; font-size: 16px; color: white; background-color: #3897f0; border: none; border-radius: 5px; cursor: pointer;">Download Screenshot</button>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script>
@@ -184,18 +198,14 @@
 
             // Apply the background gradient explicitly to the element before screenshot
             element.style.background = 'linear-gradient(to bottom right, #fff8eb, #e2d8e6)';
-            
+
             // Get the current device's viewport dimensions
             var currentWidth = window.innerWidth;
-            var currentHeight = window.innerHeight;
+            var currentHeight = element.scrollHeight; // Updated to capture full height of container
 
             // Set the scale factor for higher quality
             var scaleFactor = 4;
 
-            // Ensure the element's width and height before capturing
-            element.style.width = currentWidth + 'px';
-            element.style.height = currentHeight + 'px';
-            
             // Capture the screenshot with higher scale for better quality
             domtoimage.toPng(element, { 
                 width: currentWidth * scaleFactor, 
@@ -204,7 +214,7 @@
                     transform: 'scale(' + scaleFactor + ')',
                     transformOrigin: 'top left',
                     width: currentWidth + 'px',
-                    height: currentHeight + 'px'
+                    height: currentHeight / scaleFactor + 'px' // Ensure the height is correctly applied
                 }
             }).then(function (dataUrl) {
                 var link = document.createElement('a');
@@ -214,8 +224,6 @@
 
                 // Remove the temporary background and reset dimensions after the screenshot
                 element.style.background = originalBackground; // Restore original background
-                element.style.width = '';
-                element.style.height = '';
             }).catch(function (error) {
                 console.error('Error capturing screenshot:', error);
             });
