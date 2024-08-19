@@ -17,15 +17,20 @@
             height: 100vh;
             overflow: hidden;
             position: relative;
-            padding: 2px;
         }
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
         .fade-in {
-            animation: fadeIn 2s ease-in-out;
+            opacity: 0; /* Start with hidden elements */
+            animation: fadeIn 2s ease-in-out forwards; /* Apply fade-in animation */
         }
+        .fade-in-delay-1 { animation-delay: 0s; }
+        .fade-in-delay-2 { animation-delay: 2s; }
+        .fade-in-delay-3 { animation-delay: 4s; }
+        .fade-in-delay-4 { animation-delay: 6s; }
+
         .screenshot-container {
             position: absolute;
             display: flex;
@@ -170,42 +175,41 @@
                 width: 84%;
                 height: 220px;
                 top: -85px;
-                left: 111px;
+                left: 106px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Add 'fade-in' class to elements you want to fade in -->
-    <div class="screenshot-container fade-in" id="screenshotContainer">
-        <div class="toolbar fade-in">
-            <h1 class="fade-in">נתוני התקדמות</h1>
+    <!-- Add 'fade-in' class with delays to elements to control the order -->
+    <div class="screenshot-container fade-in-delay-1" id="screenshotContainer">
+        <div class="toolbar fade-in fade-in-delay-1">
+            <h1 class="fade-in fade-in-delay-1">נתוני התקדמות</h1>
         </div>
-        <div class="container fade-in" id="contentToShare">
-            <div class="arrow fade-in">
+        <div class="container fade-in fade-in-delay-3" id="contentToShare">
+            <div class="arrow fade-in fade-in-delay-3">
                 <img src="arrow.svg" alt="arrow">
             </div>
-            <div class="content fade-in">
-                <div class="box general-info fade-in">
+            <div class="content fade-in fade-in-delay-4">
+                <div class="box general-info fade-in fade-in-delay-4">
                     <p>מידע כללי</p>
                 </div>
-                <div class="lightful-logo fade-in">
+                <div class="lightful-logo fade-in fade-in-delay-2">
                     <img src="logofull250px.svg" alt="LIGHTFUL">
                 </div>
             </div>
         </div>
     </div>
-    <button id="downloadScreenshot" style="position: absolute;
-        position: absolute;
-    bottom: 99px;
-    right: 25px;
-    padding: 10px 10px;
-    font-size: 16px;
-    color: white;
-    background-color: #f59e65bf;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;">Download</button>
+    <button id="downloadScreenshot" class="fade-in fade-in-delay-5" style="position: absolute;
+        bottom: 99px;
+        right: 25px;
+        padding: 10px 10px;
+        font-size: 16px;
+        color: white;
+        background-color: #f59e65bf;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;">Download</button>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script>
