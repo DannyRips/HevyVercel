@@ -193,54 +193,42 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script>
         document.getElementById('downloadScreenshot').addEventListener('click', function() {
-            var element = document.querySelector('body'); // Capture the entire body including toolbar and container
-
-            var originalBackground = element.style.background; // Save original background
-
-            // Get the current device's viewport dimensions and full content height
-            var currentWidth = document.documentElement.scrollWidth;
-            var currentHeight = document.documentElement.scrollHeight;
+            var element = document.getElementById('contentToShare'); // Target only the container element
+            
+            // Save the original width and height
+            var originalWidth = element.style.width;
+            var originalHeight = element.style.height;
 
             // Set the scale factor for higher quality
             var scaleFactor = 4;
 
-            // Create a clone of the element to be captured
-            var clone = element.cloneNode(true);
-
-            // Create a container for the clone
-            var cloneContainer = document.createElement('div');
-            cloneContainer.style.width = currentWidth + 'px';
-            cloneContainer.style.height = currentHeight + 'px';
-            cloneContainer.style.position = 'absolute';
-            cloneContainer.style.top = '0';
-            cloneContainer.style.left = '0';
-            cloneContainer.style.overflow = 'hidden';
-            cloneContainer.style.zIndex = '-1'; // Ensure it's not visible on top
-
-            // Apply scale to the clone
-            clone.style.transform = 'scale(' + scaleFactor + ')';
-            clone.style.transformOrigin = 'top left';
-            clone.style.width = currentWidth + 'px';
-            clone.style.height = currentHeight + 'px';
-
-            cloneContainer.appendChild(clone);
-            document.body.appendChild(cloneContainer); // Append cloneContainer to body for capturing
-
+            // Set the new dimensions for high-quality screenshot
+            var width = element.offsetWidth;
+            var height = element.offsetHeight;
+            
             // Capture the screenshot with higher scale for better quality
-            domtoimage.toPng(cloneContainer, {
-                width: currentWidth * scaleFactor,
-                height: currentHeight * scaleFactor
+            domtoimage.toPng(element, { 
+                width: width * scaleFactor, 
+                height: height * scaleFactor,
+                style: {
+                    width: width + 'px',
+                    height: height + 'px'
+                },
+                filter: function (node) {
+                    // Exclude the download button from the screenshot
+                    return node.id !== 'downloadScreenshot';
+                }
             }).then(function (dataUrl) {
                 var link = document.createElement('a');
                 link.download = 'Lightful_share_image.png';
                 link.href = dataUrl;
                 link.click();
 
-                // Clean up: remove the temporary background and cloned element after the screenshot
-                document.body.removeChild(cloneContainer);
+                // Restore original dimensions
+                element.style.width = originalWidth;
+                element.style.height = originalHeight;
             }).catch(function (error) {
                 console.error('Error capturing screenshot:', error);
-                document.body.removeChild(cloneContainer);
             });
         });
     </script>
