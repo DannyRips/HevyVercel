@@ -13,31 +13,25 @@
             direction: rtl;
             display: flex;
             justify-content: center;
-            align-items: center;
-            height: 100vh;
+            align-items: flex-start;
+            min-height: 100vh;
             overflow: hidden;
             position: relative;
         }
         .container {
             max-width: 800px;
             width: 100%;
-            top: -66px;
             max-height: 530px;
-            height: 524px;
+            height: auto;
             margin: 0 auto;
             text-align: center;
             position: relative;
             padding: 20px;
             box-sizing: border-box;
-            overflow: hidden;
         }
         .toolbar {
             width: 100%;
             height: 70px;
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -51,8 +45,7 @@
             -webkit-text-stroke: 0.9px #000; /* Black outline */
         }
         .arrow {
-            position: relative;
-            margin-top: -58px;
+            margin-top: -20px;
         }
         .arrow img {
             width: 177px; /* Adjust the size as needed */
@@ -92,7 +85,6 @@
         }
         .box.summary {
             top: -68px;
-            /* display: flex; */
             justify-content: center;
             background: linear-gradient(90deg, #ffd1dcd1, #b8d2e466);
             -webkit-text-stroke: 0.2px #000; /* Black outline */
@@ -189,26 +181,32 @@
         </div>
     </div>
     <button id="downloadScreenshot" style="position: absolute; bottom: 175px; right: 20px; padding: 10px 20px; font-size: 16px; color: white; background-color: #3897f0; border: none; border-radius: 5px; cursor: pointer;">Download Screenshot</button>
-
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script>
         document.getElementById('downloadScreenshot').addEventListener('click', function() {
             var element = document.getElementById('contentToShare');
+            var toolbar = document.querySelector('.toolbar');
+
             var originalBackground = element.style.background; // Save original background
 
             // Apply the background gradient explicitly to the element before screenshot
             element.style.background = 'linear-gradient(to bottom right, #fff8eb, #e2d8e6)';
 
-            // Get the current device's viewport dimensions
+            // Get the current device's dimensions including the toolbar
             var currentWidth = window.innerWidth;
-            var currentHeight = element.scrollHeight; // Updated to capture full height of container
+            var currentHeight = element.scrollHeight + toolbar.scrollHeight;
 
             // Set the scale factor for higher quality
             var scaleFactor = 4;
 
+            // Ensure the element's width and height before capturing
+            element.style.width = currentWidth + 'px';
+            element.style.height = currentHeight / scaleFactor + 'px';
+
             // Capture the screenshot with higher scale for better quality
-            domtoimage.toPng(element, { 
-                width: currentWidth * scaleFactor, 
+            domtoimage.toPng(element, {
+                width: currentWidth * scaleFactor,
                 height: currentHeight * scaleFactor,
                 style: {
                     transform: 'scale(' + scaleFactor + ')',
@@ -224,6 +222,8 @@
 
                 // Remove the temporary background and reset dimensions after the screenshot
                 element.style.background = originalBackground; // Restore original background
+                element.style.width = '';
+                element.style.height = '';
             }).catch(function (error) {
                 console.error('Error capturing screenshot:', error);
             });
