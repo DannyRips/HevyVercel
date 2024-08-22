@@ -166,6 +166,14 @@
             display: inline-block;
             -webkit-text-stroke: 0.2px #000; /* Black outline */
         }
+        .charts-box {
+            width: 100%;
+            padding: 20px;
+            margin-top: 20px;
+            background: linear-gradient(to bottom right, #e2e8f0, #cbd5e0);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
         .charts-container {
             display: flex;
             justify-content: space-around;
@@ -194,6 +202,14 @@
                 top: -85px;
                 left: 106px;
             }
+            .charts-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .chart {
+                width: 80%;
+                margin-bottom: 20px;
+            }
         }
     </style>
 </head>
@@ -214,10 +230,12 @@
                 <div class="lightful-logo fade-in fade-in-delay-4">
                     <img src="logofull250px.svg" alt="LIGHTFUL">
                 </div>
-                <div class="charts-container fade-in fade-in-delay-5">
-                    <div id="chart1" class="chart"></div>
-                    <div id="chart2" class="chart"></div>
-                    <div id="chart3" class="chart"></div>
+                <div class="charts-box fade-in fade-in-delay-5">
+                    <div class="charts-container">
+                        <div id="chart1" class="chart"></div>
+                        <div id="chart2" class="chart"></div>
+                        <div id="chart3" class="chart"></div>
+                    </div>
                 </div>
             </div>
         </div>
