@@ -167,16 +167,16 @@
             -webkit-text-stroke: 0.2px #000; /* Black outline */
         }
         .charts-box {
-              width: 100%;
-    bottom: 70px;
-    left: 19px;
-    height: 267px;
-    position: relative;
-    padding: 20px;
-    margin-top: 20px;
-    background: linear-gradient(to bottom right, red, #cbd5e0);
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            bottom: 70px;
+            left: 19px;
+            height: 267px;
+            position: relative;
+            padding: 20px;
+            margin-top: 20px;
+            background: linear-gradient(to bottom right, red, #cbd5e0);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         .charts-container {
             display: flex;
@@ -190,8 +190,17 @@
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
-        button {
-            color: transparent;
+        .download-button {
+            position: relative;
+            bottom: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #f59e65bf;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
         }
         @media (max-width: 768px) {
             .box.general-info {
@@ -211,11 +220,11 @@
                 align-items: center;
             }
             .chart {
-                    width: 110%;
-            position: relative;
-        bottom: 39px;
-        height: 98px;
-        margin-bottom: 5px;
+                width: 110%;
+                position: relative;
+                bottom: 39px;
+                height: 98px;
+                margin-bottom: 5px;
             }
         }
     </style>
@@ -246,17 +255,8 @@
                 </div>
             </div>
         </div>
+        <button id="downloadScreenshot" class="download-button fade-in fade-in-delay-5">Download</button>
     </div>
-    <button id="downloadScreenshot" class="fade-in fade-in-delay-5" style="position: relative;
-         bottom: 311px;
-         right: 139px;
-         padding: 10px 10px;
-        font-size: 16px;
-        color: white;
-        background-color: #f59e65bf;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;">Download</button>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script>
